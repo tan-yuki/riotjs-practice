@@ -1,4 +1,5 @@
 gulp        = require 'gulp'
+gutil       = require 'gulp-util'
 browserify  = require 'browserify'
 riotify     = require 'riotify'
 path        = require 'path'
@@ -10,6 +11,11 @@ watchify    = require 'watchify'
 path        = require 'path'
 browserSync = require 'browser-sync'
 reload      = browserSync.reload
+clean       = require 'gulp-clean'
+
+gulp.task 'clean', ->
+  gulp.src './dist', read: false
+    .pipe clean()
 
 gulp.task 'browserify', ->
   browserify
@@ -23,6 +29,8 @@ gulp.task 'browserify', ->
     .pipe uglify()
     .pipe sourcemaps.write './'
     .pipe gulp.dest './dist'
+  .on 'error', ->
+    gutil.log(arguments)
 
 gulp.task 'watch', ->
   browserSync.init
@@ -31,6 +39,10 @@ gulp.task 'watch', ->
       baseDir: './'
   o = debounceDelay: 3000
 
-  gulp.watch ['./src/**/*.js'], o, ['browserify']
+  gulp.watch ['./src/**/*.js', './src/**/*.tag'], o, [
+    'clean'
+    'browserify'
+  ]
+
   gulp.watch ['./dist/main.js', './index.html'], o, reload
 
