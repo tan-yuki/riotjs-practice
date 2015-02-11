@@ -5,10 +5,9 @@
   </form>
   <ul>
     <li each={ items }>
-      <input
-        type="checkbox"
-        checked={ done }>
+      <input type="checkbox" checked={ done }>
       <span>{ title }</span>
+      <span><a onclick={ parent.remove }>delete</a></span>
     </li>
   </ul>
 
@@ -16,13 +15,23 @@
   this.items = opts.items
 
   addTodo(e) {
+    e.preventDefault()
+
     var title = e.target.title.value
     if (title) {
       this.items.push({
         title: title,
         done: false
       })
+
+      e.target.title.value = ''
     }
+  }
+
+  remove(e) {
+    var index = this.items.indexOf(e.item)
+
+    this.items.splice(index, 1)
   }
   </script>
 </app>

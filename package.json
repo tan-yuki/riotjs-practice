@@ -19,5 +19,8 @@
   "scripts": {
     "build": "gulp",
     "start": "gulp watch"
+  },
+  "dependencies": {
+    "riot": "^2.0.8"
   }
 }
