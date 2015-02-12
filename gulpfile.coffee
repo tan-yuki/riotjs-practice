@@ -11,11 +11,16 @@ watchify    = require 'watchify'
 path        = require 'path'
 browserSync = require 'browser-sync'
 reload      = browserSync.reload
-clean       = require 'gulp-clean'
+rimraf      = require 'rimraf'
 
-gulp.task 'clean', ->
-  gulp.src './dist', read: false
-    .pipe clean()
+gulp.task 'server', [
+    'clean'
+    'browserify'
+    'watch'
+]
+
+gulp.task 'clean', (cb) ->
+  rimraf './dist', cb
 
 gulp.task 'browserify', ->
   browserify
