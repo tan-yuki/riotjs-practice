@@ -7,7 +7,7 @@
     <li each={ items }>
       <input type="checkbox" checked={ done }>
       <span>{ title }</span>
-      <span><a onclick={ parent.remove }>delete</a></span>
+      <span><a href="#" onclick={ parent.remove }>delete</a></span>
     </li>
   </ul>
 
@@ -29,9 +29,12 @@
   }
 
   remove(e) {
+    e.preventDefault()
+
     var index = this.items.indexOf(e.item)
 
     this.items.splice(index, 1)
+    this.update()
   }
   </script>
 </app>
